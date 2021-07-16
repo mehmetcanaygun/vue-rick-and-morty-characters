@@ -122,4 +122,26 @@ export default {
 .character-item:hover {
   transform: scale(1.02);
 }
+
+// Media Queries
+@media (max-width: 1024px) {
+  .character-item {
+    .img-container .img {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .character-item {
+    .img-container h3 {
+      font-size: 16px;
+    }
+
+    .info-container p {
+      font-size: 14px;
+    }
+  }
+}
 </style>

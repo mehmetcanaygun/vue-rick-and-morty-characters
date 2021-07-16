@@ -28,7 +28,6 @@ export default {
   },
   async created() {
     this.characters = await this.getCharacters();
-    console.log(this.characters);
   },
 };
 </script>
