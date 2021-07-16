@@ -1,20 +1,31 @@
 <template>
   <main class="home-page">
+    <ThePagination
+      :pagination="pagination"
+      @get-page="getPage"
+    />
     <CharacterList :characters="characters" />
+    <ThePagination
+      :pagination="pagination"
+      @get-page="getPage"
+    />
   </main>
 </template>
 
 <script>
-import CharacterList from "../components/CharacterList.vue";
+import CharacterList from "../components/CharacterList";
+import ThePagination from "../components/ThePagination";
 
 export default {
   name: "Home",
   components: {
     CharacterList,
+    ThePagination,
   },
   data() {
     return {
       characters: [],
+      pagination: null,
     };
   },
   methods: {
@@ -23,11 +34,18 @@ export default {
 
       const data = await res.json();
 
-      return data.results;
+      return [data.results, data.info];
+    },
+    async getPage(pageUrl) {
+      const res = await fetch(pageUrl);
+
+      const data = await res.json();
+
+      [this.characters, this.pagination] = [data.results, data.info];
     },
   },
   async created() {
-    this.characters = await this.getCharacters();
+    [this.characters, this.pagination] = await this.getCharacters();
   },
 };
 </script>
