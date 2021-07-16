@@ -33,10 +33,12 @@ header {
   width: 100%;
   height: 100px;
   padding: 0 $px;
+  margin-bottom: 30px;
   background-color: $color-primary;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0px 2px 8px rgba(#000, 0.3);
 
   .logo {
     width: 200px;
@@ -65,8 +67,12 @@ header {
 
 // Media Queries
 @media (max-width: 768px) {
-  header .logo {
-    font-size: 18px;
+  header {
+    padding: 0 $px-sm;
+
+    .logo {
+      font-size: 18px;
+    }
   }
 }
 </style>

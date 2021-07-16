@@ -34,4 +34,15 @@ ul {
 a {
   text-decoration: none;
 }
+
+main {
+  padding: 0 $px;
+}
+
+// Media Queries
+@media (max-width: 768px) {
+  main {
+    padding: 0 $px-sm;
+  }
+}
 </style>
