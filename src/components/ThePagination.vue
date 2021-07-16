@@ -11,7 +11,7 @@
       >Previous</button>
 
       <!-- <span>
-        {currentPage.pageNumber} / {pagination.pages}
+        1 / {{pagination.pages}}
       </span> -->
 
       <button
@@ -75,17 +75,16 @@ export default {
       border-radius: 6px;
       font-weight: bold;
       background-color: $color-primary;
-      color: $color-secondary;
+      color: $color-light;
       cursor: pointer;
 
       &:last-child {
-        margin-left: 10px;
+        margin-left: 8px;
       }
     }
 
     .page-btn:hover {
       background-color: $color-secondary;
-      color: $color-primary;
     }
 
     span {
@@ -94,8 +93,8 @@ export default {
       padding: 0 6px;
       border-radius: 6px;
       font-size: 14px;
-      background-color: $color-secondary;
-      color: darken($color-secondary, 40);
+      background-color: $color-light;
+      color: darken($color-light, 40);
       display: flex;
       justify-content: center;
       align-items: center;
