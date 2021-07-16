@@ -1,5 +1,8 @@
 <template>
-  <main class="detail-page">
+  <main
+    v-if="character"
+    class="detail-page"
+  >
     <router-link
       to="/"
       class="back-link"
@@ -35,20 +38,17 @@
           <li>
             <span>Origin:</span> {{character.origin.name}}
           </li>
-          <!-- <li>
+          <li>
             <span>Last Episodes:</span>
             <ul className="episodes-list">
-              {characterEpisodes &&
-                characterEpisodes
-                  .slice()
-                  .reverse()
-                  .map((ep) => (
-                    <li key={ep.id}>
-                      &#8212; <b>{ep.episode}</b>. {ep.name} ({ep.air_date})
-                    </li>
-                  ))}
+              <li
+                :key="episode.id"
+                v-for="episode in episodes"
+              >
+                &#8212; <b>{{episode.episode}}</b>. {{episode.name}} ({{episode.air_date}})
+              </li>
             </ul>
-          </li> -->
+          </li>
         </ul>
       </div>
     </div>
@@ -61,6 +61,7 @@ export default {
   data() {
     return {
       character: null,
+      episodes: [],
     };
   },
   methods: {
@@ -73,9 +74,45 @@ export default {
 
       return data;
     },
+    async getCharacterEpisodes(episodes) {
+      let episodesArr = [];
+      let returnArr = [];
+
+      if (episodes.length <= 5) {
+        episodes
+          .slice()
+          .reverse()
+          .forEach((ep) => episodesArr.push(ep.split("episode/")[1]));
+      } else {
+        episodes
+          .slice()
+          .reverse()
+          .filter((ep, index) => index < 5)
+          .forEach((ep, index) => episodesArr.push(ep.split("episode/")[1]));
+      }
+
+      try {
+        const res = await fetch(
+          `https://rickandmortyapi.com/api/episode/${episodesArr.join(",")}`
+        );
+
+        const data = await res.json();
+
+        if (episodesArr.length === 1) {
+          returnArr = [data];
+        } else {
+          returnArr = data;
+        }
+
+        return returnArr.slice().reverse();
+      } catch (err) {
+        console.log(err.message);
+      }
+    },
   },
   async created() {
     this.character = await this.getCharacter(this.$route.params.id);
+    this.episodes = await this.getCharacterEpisodes(this.character.episode);
   },
 };
 </script>
